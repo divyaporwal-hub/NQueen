@@ -1,135 +1,61 @@
 # NQueen
 This is the backtracking problem..
-#include<bits/stdc++.h>
-
-using namespace std;
-
-#define send {ios_base::sync_with_stdio(false);}
-
-#define help {cin.tie(NULL);}
-
-#define int               long long int
-
-#define rep(i,a,b)        for(int i=a;i<b;i++)
-
+#include<iostream>
+#define int long long int 
+#define rep(i,n) for(int i=0;i<n;i++)
+#define rep1(i,n) for(int i=1;i<=n;i++)
 char arr[1000][1000];
-
-bool ispossible(int row, int col, int size){
-
-       
-
-        for(int i = row,j = col; i >=0 && j >=0; i--){
-
-              if(arr[i][j] == 'Q'){
-
-                  return false;
-
-              }
-
-        }
-
-        for(int i = row,j = col; i >=0 && j >=0; i--,j++){
-
-              if(arr[i][j] == 'Q'){
-
-                  return false;
-
-              }
-
-        }
-
-        for(int i = row,j = col; i >=0 && j >=0; i--, j--){
-
-              if(arr[i][j] == 'Q'){
-
-                 return false;
-
-              }
-
-        }
-
-    return true;
-
-}
-
-void queenshelp(int row,int size){
-
-       if(row == size){
-
-            for(int i = 0; i < size; i++){
-
-                 for(int j = 0; j < size; j++){
-
-                     cout << arr[i][j] << " ";
-
-                 }
-
-                 cout << '\n';
-
-            }
-
-            cout << '\n';
-
-            return;
-
-       }
-
-       for(int j = 0; j < size; j++){
-
-           if(ispossible(row,j,size)){
-
-               arr[row][j] = 'Q';
-
-               queenshelp(row+1,size);
-
-               arr[row][j] = '_';
-
-           }
-
-       }
-
-    return;
-
-}
-
-void queens(int n){
-
-     queenshelp(0,n);
-
-}
-
-void solve(){
-
-    int n;
-
-    cin >> n;
-
-    for(int i = 0; i < 1000; i++){
-
-     for(int j = 0; j < 1000; j++){
-
-         arr[i][j] = '_';
-
-     }
-
+using namespace std;
+bool issafe(int row ,int col, int n)
+{
+    for(int i=row;i>=0;i--)
+    {
+        if(arr[i][col]=='Q')
+        return false;
+        
     }
-
-    queens(n);
-
+    for(int i=row,j=col;i>=0&&j>=0;i--,j--)
+    {
+        if(arr[i][j]=='Q')
+        return false;
+    }
+    for(int i=row,j=col;i>=0&&j>=0;i--,j++)
+    {
+        if(arr[i][j]=='Q')
+        return false;
+        
+    }
+    return true;
 }
-
-signed main(){
-
-       send help 
-
-       // int tc;
-
-       // cin >> tc;
-
-       // while(tc--){
-
-          solve();
-
-       // }
-
+void queen(int row,int n)
+{
+    if(row==n)
+    {
+           rep(i,n){
+    rep(j,n)
+    cout<<arr[i][j]<<".";
+    cout<<'\n';
+    } cout<<'\n';
+        return;
+    }
+    rep(j,n)
+    {
+        if(issafe(row,j,n)){
+        arr[row][j]='Q';
+        queen(row+1,n);
+        arr[row][j]='.';
+        }
+    }
+    return;
+        
+}
+signed main()    
+{ int n;
+  cin>>n;
+  rep(i,n)
+  rep(j,n)
+  arr[i][j]='.';
+  queen(0,n) ;
+    
+    return 0;
 }
